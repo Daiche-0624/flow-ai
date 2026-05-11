@@ -52,5 +52,3 @@ npm run dev
 ## 👤 作者
 Daiche-0624
 
-## 👤 作者
-Daiche-0624
