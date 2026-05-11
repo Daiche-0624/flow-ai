@@ -224,8 +224,8 @@ function AISuggestionPanel({ suggestion, staff, tasks, onAccept, onReject }) {
               padding: "9px", fontSize: 12, fontWeight: 600, borderRadius: 8, cursor: "pointer",
               background: "#059669", color: "#fff", border: "none", transition: "background 0.15s",
             }}
-            onMouseOver={e => (e.currentTarget as HTMLButtonElement).style.background = "#047857"}
-            onMouseOut={e => (e.currentTarget as HTMLButtonElement).style.background = "#059669"}
+            onMouseOver={e => e.target.style.background = "#047857"}
+            onMouseOut={e => e.target.style.background = "#059669"}
           >
             ✓ 承認して適用
           </button>
@@ -235,8 +235,8 @@ function AISuggestionPanel({ suggestion, staff, tasks, onAccept, onReject }) {
               padding: "9px", fontSize: 12, fontWeight: 600, borderRadius: 8, cursor: "pointer",
               background: "#fff", color: "#6B7280", border: "1px solid #D1D5DB", transition: "background 0.15s",
             }}
-            onMouseOver={e => (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"}
-            onMouseOut={e => (e.currentTarget as HTMLButtonElement).style.background = "#fff"}
+            onMouseOver={e => e.target.style.background = "#F9FAFB"}
+            onMouseOut={e => e.target.style.background = "#fff"}
           >
             ✕ 却下
           </button>
@@ -475,45 +475,41 @@ export default function FlowAI() {
   return (
     <div style={{ fontFamily: "'DM Sans', 'Hiragino Sans', sans-serif", background: "#F8FAFC", minHeight: "100vh", color: "#111827" }}>
 
-      {/* ── Header ── */}
-      <div style={{
-        background: "#fff", borderBottom: "1px solid #E5E7EB",
-        padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between",
-        position: "sticky", top: 0, zIndex: 30,
-      }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: -0.5 }}>FlowAI</div>
-          <div style={{ width: 1, height: 18, background: "#E5E7EB" }} />
-          <span style={{ fontSize: 12, color: "#6B7280" }}>渋谷カフェ店 ・ シフト管理</span>
-          {isBusy && (
-            <span style={{ background: "#FEE2E2", color: "#991B1B", fontSize: 11, padding: "3px 10px", borderRadius: 99, fontWeight: 600, border: "1px solid #FECACA" }}>
-              ⚡ 混雑中
-            </span>
-          )}
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 10, padding: 3 }}>
-            <button style={tabStyle(activeTab === "dashboard")} onClick={() => setActiveTab("dashboard")}>ダッシュボード</button>
-            <button style={tabStyle(activeTab === "history")} onClick={() => setActiveTab("history")}>提案履歴 {suggestions.length > 0 && `(${suggestions.length})`}</button>
-          </div>
-          <button
-            onClick={requestAI}
-            disabled={isLoadingAI}
-            style={{
-              ...btnStyle,
-              background: isLoadingAI ? "#E5E7EB" : "#111827",
-              color: isLoadingAI ? "#9CA3AF" : "#fff",
-              cursor: isLoadingAI ? "not-allowed" : "pointer",
-            }}
-          >
-            {isLoadingAI ? (
-              <><span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>◌</span> 分析中...</>
-            ) : (
-              <>✦ AI最適化を実行</>
-            )}
-          </button>
-        </div>
-      </div>
+     {/* ── Header ── */}
+<div style={{
+  background: "#fff", borderBottom: "1px solid #E5E7EB",
+  padding: "10px 16px", display: "flex", alignItems: "center", 
+  justifyContent: "space-between", position: "sticky", top: 0, zIndex: 30,
+  flexWrap: "wrap", gap: 8,
+}}>
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <div style={{ fontWeight: 800, fontSize: 16, letterSpacing: -0.5 }}>FlowAI</div>
+    {isBusy && (
+      <span style={{ background: "#FEE2E2", color: "#991B1B", fontSize: 11, padding: "3px 10px", borderRadius: 99, fontWeight: 600, border: "1px solid #FECACA" }}>
+        ⚡ 混雑中
+      </span>
+    )}
+  </div>
+  <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 10, padding: 3 }}>
+      <button style={tabStyle(activeTab === "dashboard")} onClick={() => setActiveTab("dashboard")}>ダッシュボード</button>
+      <button style={tabStyle(activeTab === "history")} onClick={() => setActiveTab("history")}>履歴 {suggestions.length > 0 && `(${suggestions.length})`}</button>
+    </div>
+    <button
+      onClick={requestAI}
+      disabled={isLoadingAI}
+      style={{
+        ...btnStyle,
+        background: isLoadingAI ? "#E5E7EB" : "#111827",
+        color: isLoadingAI ? "#9CA3AF" : "#fff",
+        cursor: isLoadingAI ? "not-allowed" : "pointer",
+        fontSize: 11,
+      }}
+    >
+      {isLoadingAI ? <>◌ 分析中...</> : <>✦ AI最適化</>}
+    </button>
+  </div>
+</div>
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "20px 24px" }}>
 
@@ -563,7 +559,7 @@ export default function FlowAI() {
         )}
 
         {activeTab === "dashboard" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 12 }}>
 
             {/* ── Task Board ── */}
             <div style={panelStyle}>
