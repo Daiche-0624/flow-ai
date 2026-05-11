@@ -224,8 +224,8 @@ function AISuggestionPanel({ suggestion, staff, tasks, onAccept, onReject }) {
               padding: "9px", fontSize: 12, fontWeight: 600, borderRadius: 8, cursor: "pointer",
               background: "#059669", color: "#fff", border: "none", transition: "background 0.15s",
             }}
-            onMouseOver={e => e.target.style.background = "#047857"}
-            onMouseOut={e => e.target.style.background = "#059669"}
+            onMouseOver={e => (e.currentTarget as HTMLButtonElement).style.background = "#047857"}
+            onMouseOut={e => (e.currentTarget as HTMLButtonElement).style.background = "#059669"}
           >
             ✓ 承認して適用
           </button>
@@ -235,8 +235,8 @@ function AISuggestionPanel({ suggestion, staff, tasks, onAccept, onReject }) {
               padding: "9px", fontSize: 12, fontWeight: 600, borderRadius: 8, cursor: "pointer",
               background: "#fff", color: "#6B7280", border: "1px solid #D1D5DB", transition: "background 0.15s",
             }}
-            onMouseOver={e => e.target.style.background = "#F9FAFB"}
-            onMouseOut={e => e.target.style.background = "#fff"}
+            onMouseOver={e => (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"}
+            onMouseOut={e => (e.currentTarget as HTMLButtonElement).style.background = "#fff"}
           >
             ✕ 却下
           </button>
